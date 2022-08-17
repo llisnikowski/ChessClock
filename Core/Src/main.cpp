@@ -27,6 +27,9 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
+#include "../uartLog/uartLog.h"
+#include "../button/button.hpp"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -68,6 +71,16 @@ int main(void)
 {
   /* USER CODE BEGIN 1 */
 
+	Button bLeft{BUTTON_LEFT_GPIO_Port, BUTTON_LEFT_Pin};
+	Button bRight{BUTTON_RIGHT_GPIO_Port, BUTTON_RIGHT_Pin};
+	Button bPlay{BUTTON_PLAY_GPIO_Port, BUTTON_PLAY_Pin};
+	Button bOptions{BUTTON_OPTIONS_GPIO_Port, BUTTON_OPTIONS_Pin};
+	Button bPlus{BUTTON_PLUS_GPIO_Port, BUTTON_PLUS_Pin};
+	Button bMinus{BUTTON_MINUS_GPIO_Port, BUTTON_MINUS_Pin};
+	Button bPlayer1{BUTTON_PLAYER1_GPIO_Port, BUTTON_PLAYER1_Pin};
+	Button bPlayer2{BUTTON_PLAYER2_GPIO_Port, BUTTON_PLAYER2_Pin};
+
+
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -99,8 +112,37 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  for(int i = 0; i<10; i++){
+	  HAL_GPIO_TogglePin(DIODE_PLAYER1_GPIO_Port, DIODE_PLAYER1_Pin);
+	  HAL_Delay(50);
+  }
+  for(int i = 0; i<10; i++){
+	  HAL_GPIO_TogglePin(DIODE_PLAYER2_GPIO_Port, DIODE_PLAYER2_Pin);
+	  HAL_Delay(50);
+  }
+
+
+
   while (1)
   {
+	  if(bLeft.fallingEdge(true))
+		  printf("left\n");
+	  if(bRight.fallingEdge(true))
+		  printf("right\n");
+	  if(bPlay.fallingEdge(true))
+		  printf("play\n");
+	  if(bOptions.fallingEdge(true))
+		  printf("options\n");
+	  if(bPlus.fallingEdge(true))
+		  printf("Plus\n");
+	  if(bMinus.fallingEdge(true))
+		  printf("minus\n");
+	  if(bPlayer1.fallingEdge(true))
+		  printf("player1\n");
+	  if(bPlayer2.fallingEdge(true))
+		  printf("player2\n");
+
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -125,7 +167,7 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI_DIV2;
-  RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL4;
+  RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL16;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
   {
     Error_Handler();
@@ -137,10 +179,10 @@ void SystemClock_Config(void)
                               |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
-  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
+  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;
   RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0) != HAL_OK)
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2) != HAL_OK)
   {
     Error_Handler();
   }
