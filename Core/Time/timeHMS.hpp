@@ -25,9 +25,9 @@ public:
 	void setMinute(int8_t m);
 	void setSecond(int8_t s);
 	void setTime(int8_t h, int8_t m,int8_t s);
-	int8_t getHour(){return hour_;}
-	int8_t getMinute(){return minute_;}
-	int8_t getSecond(){return second_;}
+	int8_t getHour() const {return hour_;}
+	int8_t getMinute() const {return minute_;}
+	int8_t getSecond() const {return second_;}
 
 	bool zeroCrossing(){return crossing_;}
 	void resetCrossing(){crossing_ = false;}
