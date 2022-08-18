@@ -29,6 +29,7 @@
 
 #include "../uartLog/uartLog.h"
 #include "../button/button.hpp"
+#include "../diode/diode.hpp"
 
 /* USER CODE END Includes */
 
@@ -80,6 +81,9 @@ int main(void)
 	Button bPlayer1{BUTTON_PLAYER1_GPIO_Port, BUTTON_PLAYER1_Pin};
 	Button bPlayer2{BUTTON_PLAYER2_GPIO_Port, BUTTON_PLAYER2_Pin};
 
+	Diode dPlayer1{DIODE_PLAYER1_GPIO_Port, DIODE_PLAYER1_Pin};
+	Diode dPlayer2{DIODE_PLAYER2_GPIO_Port, DIODE_PLAYER2_Pin};
+
 
   /* USER CODE END 1 */
 
@@ -113,11 +117,11 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   for(int i = 0; i<10; i++){
-	  HAL_GPIO_TogglePin(DIODE_PLAYER1_GPIO_Port, DIODE_PLAYER1_Pin);
+	  dPlayer1.toggle();
 	  HAL_Delay(50);
   }
   for(int i = 0; i<10; i++){
-	  HAL_GPIO_TogglePin(DIODE_PLAYER2_GPIO_Port, DIODE_PLAYER2_Pin);
+	  dPlayer2.toggle();
 	  HAL_Delay(50);
   }
 
