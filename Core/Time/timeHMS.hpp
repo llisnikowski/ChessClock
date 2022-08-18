@@ -12,10 +12,9 @@
 
 class TimeHMS {
 public:
-	TimeHMS();
-	TimeHMS(int8_t hour, int8_t minute, int8_t second);
-	TimeHMS(const TimeHMS & t);
-	~TimeHMS();
+	constexpr TimeHMS();
+	constexpr TimeHMS(int8_t hour, int8_t minute, int8_t second);
+	~TimeHMS() = default;
 
 	bool addSeconds(int8_t s);
 	bool addMinutes(int8_t m);
@@ -25,25 +24,19 @@ public:
 	void setMinute(int8_t m);
 	void setSecond(int8_t s);
 	void setTime(int8_t h, int8_t m,int8_t s);
-	int8_t getHour() const {return hour_;}
-	int8_t getMinute() const {return minute_;}
-	int8_t getSecond() const {return second_;}
+	constexpr int8_t getHour() const {return hour_;}
+	constexpr int8_t getMinute() const {return minute_;}
+	constexpr int8_t getSecond() const {return second_;}
 
-	bool zeroCrossing(){return crossing_;}
-	void resetCrossing(){crossing_ = false;}
-
-	void operator+=(TimeHMS & t);
-	void operator-=(TimeHMS & t);
+	bool operator+=(const TimeHMS & t);
+	bool operator-=(const TimeHMS & t);
 
 private:
 	bool correctTime();
-	void cutTime();
 
 	int8_t hour_;
 	int8_t minute_;
 	int8_t second_;
-
-	bool crossing_;
 };
 
 TimeHMS operator+(TimeHMS & t1, TimeHMS & t2);

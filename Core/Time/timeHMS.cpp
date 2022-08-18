@@ -7,21 +7,17 @@
 
 #include "timeHMS.hpp"
 
-TimeHMS::TimeHMS()
-	:hour_{0}, minute_{0}, second_{0}, crossing_{}
+constexpr TimeHMS::TimeHMS()
+	:hour_{0}, minute_{0}, second_{0}
 {
 }
 
-TimeHMS::TimeHMS(int8_t hour, int8_t minute, int8_t secound)
-	:hour_{hour}, minute_{minute}, second_{secound}, crossing_{}
+constexpr TimeHMS::TimeHMS(int8_t hour, int8_t minute, int8_t secound)
+	:hour_{hour}, minute_{minute}, second_{secound}
 {
-	cutTime();
+	correctTime();
 }
 
-TimeHMS::TimeHMS(const TimeHMS & t)
-	:hour_{t.hour_}, minute_{t.minute_}, second_{t.second_}, crossing_{}
-{
-}
 
 
 bool TimeHMS::addSeconds(int8_t s)
@@ -45,19 +41,19 @@ bool TimeHMS::addHours(int8_t h)
 void TimeHMS::setHour(int8_t h)
 {
 	hour_ = h;
-	cutTime();
+	correctTime();
 }
 
 void TimeHMS::setMinute(int8_t m)
 {
 	minute_ = m;
-	cutTime();
+	correctTime();
 }
 
 void TimeHMS::setSecond(int8_t s)
 {
 	second_ = s;
-	cutTime();
+	correctTime();
 }
 
 void TimeHMS::setTime(int8_t h, int8_t m,int8_t s)
@@ -65,7 +61,7 @@ void TimeHMS::setTime(int8_t h, int8_t m,int8_t s)
 	hour_ = h;
 	minute_ = m;
 	second_ = s;
-	cutTime();
+	correctTime();
 }
 
 
@@ -88,47 +84,32 @@ bool TimeHMS::correctTime()
 		minute_ += 60;
 	}
 	if(hour_ >= 24){
-		hour_ = 0;
-		crossing_ = true;
+		hour_ = hour_%24;
 		return true;
 	}
-	if(hour_ < 0){
-		hour_ = 23;
-		crossing_ = true;
+	else if(hour_ < 0){
+		hour_ = 23 + (hour_ + 1) % 24;
 		return true;
 	}
 	return false;
 }
 
-void TimeHMS::cutTime()
-{
-	if(second_ < 0 || second_ >= 60){
-		second_ = 0;
-	}
-	if(minute_ < 0 || minute_ >= 60){
-		minute_ = 0;
-	}
-	if(hour_ < 0 || hour_ >= 24){
-		hour_ = 0;
-	}
-}
 
 
-
-void TimeHMS::operator+=(TimeHMS & t)
+bool TimeHMS::operator+=(const TimeHMS & t)
 {
 	this->second_ += t.second_;
 	this->minute_ += t.minute_;
 	this->hour_ += t.hour_;
-	correctTime();
+	return correctTime();
 }
 
-void TimeHMS::operator-=(TimeHMS & t)
+bool TimeHMS::operator-=(const TimeHMS & t)
 {
 	this->second_ -= t.second_;
 	this->minute_ -= t.minute_;
 	this->hour_ -= t.hour_;
-	correctTime();
+	return correctTime();
 }
 
 
