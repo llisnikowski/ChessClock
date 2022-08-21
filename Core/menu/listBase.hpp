@@ -9,6 +9,7 @@
 #define MENU_LISTBASE_HPP_
 
 #include "element.hpp"
+#include <stdint.h>
 
 namespace Menu {
 
@@ -17,6 +18,8 @@ class ListBase : public Element
 public:
 	ListBase(const char* name);
 	virtual ~ListBase();
+
+	virtual int16_t getSize() const = 0;
 };
 
 } /* namespace Menu */
