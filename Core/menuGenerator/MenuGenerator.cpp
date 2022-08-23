@@ -1,0 +1,120 @@
+/*
+ * MenuGenerator.cpp
+ *
+ *  Created on: 20 sie 2022
+ *      Author: Łukasz
+ */
+
+#include "../menuGenerator/MenuGenerator.hpp"
+
+#include "../menu/list.hpp"
+#include "../menu/timeModeElement.hpp"
+#include "../chessTimeMode/base.hpp"
+#include "../chessTimeMode/normal.hpp"
+#include "../time/timeHMS.hpp"
+
+constexpr uint8_t BLITZ_COUNT{2};
+constexpr uint8_t RAPID_COUNT{4};
+constexpr uint8_t NORMAL_COUNT{2};
+
+Menu::List<4,Menu::ListBase> mainList{""};
+Menu::List<BLITZ_COUNT + RAPID_COUNT + NORMAL_COUNT, TimeModeElement> allModesList{"All"};
+Menu::List<BLITZ_COUNT,TimeModeElement> blitzList{"Blitz"};
+Menu::List<RAPID_COUNT,TimeModeElement> rapidList{"Rapid"};
+Menu::List<NORMAL_COUNT,TimeModeElement> normalList{"Normal"};
+
+ChessTimeMode::Normal cTM_1m{TimeHMS{0, 1, 0}};
+ChessTimeMode::Normal cTM_5m{TimeHMS{0, 5, 0}};
+
+ChessTimeMode::Normal cTM_10m{TimeHMS{0, 10, 0}};
+ChessTimeMode::Normal cTM_15m{TimeHMS{0, 15, 0}};
+ChessTimeMode::Normal cTM_20m{TimeHMS{0, 20, 0}};
+ChessTimeMode::Normal cTM_30m{TimeHMS{0, 30, 0}};
+
+ChessTimeMode::Normal cTM_1h{TimeHMS{1, 0, 0}};
+ChessTimeMode::Normal cTM_1h30m{TimeHMS{1, 30, 0}};
+
+
+TimeModeElement blitzElements[BLITZ_COUNT]{{"1min", &cTM_1m}, {"5m", &cTM_5m}};
+TimeModeElement rapidElements[RAPID_COUNT]{{"10min", &cTM_10m}, {"15m", &cTM_15m}, {"20min", &cTM_20m}, {"30min", &cTM_30m}};
+TimeModeElement normalElements[NORMAL_COUNT]{{"1h", &cTM_1h}, {"1h 30min", &cTM_1h30m}};
+
+
+
+MenuGenerator::MenuGenerator()
+{
+}
+
+MenuGenerator::~MenuGenerator()
+{
+}
+
+inline bool linkMainList()
+{
+	return mainList.setElement(0, &allModesList)
+			&& mainList.setElement(1, &blitzList)
+			&& mainList.setElement(2, &rapidList)
+			&& mainList.setElement(3, &normalList);
+}
+
+inline bool linkBlitzList()
+{
+	for(int i = 0; i < BLITZ_COUNT ; i++){
+		if(!blitzList.setElement(i, &blitzElements[i])){
+			return false;
+		}
+	}
+	return true;
+}
+
+inline bool linkRapidList()
+{
+	for(int i = 0; i < RAPID_COUNT ; i++){
+		if(!rapidList.setElement(i, &rapidElements[i])){
+			return false;
+		}
+	}
+	return true;
+}
+
+inline bool linkNormalList()
+{
+	for(int i = 0; i < NORMAL_COUNT ; i++){
+		if(!normalList.setElement(i, &normalElements[i])){
+			return false;
+		}
+	}
+	return true;
+}
+
+inline bool linkAllModesList()
+{
+	for(int i = 0; i < BLITZ_COUNT ; i++){
+		if(!allModesList.setElement(i, &blitzElements[i])){
+			return false;
+		}
+	}
+	for(int i = 0; i < RAPID_COUNT ; i++){
+		if(!allModesList.setElement(i, &rapidElements[i])){
+			return false;
+		}
+	}
+	for(int i = 0; i < NORMAL_COUNT ; i++){
+		if(!allModesList.setElement(i, &normalElements[i])){
+			return false;
+		}
+	}
+	return true;
+}
+
+void MenuGenerator::link()
+{
+	if(!linkMainList()){
+
+	}
+	if(!linkBlitzList() || !linkRapidList() || !linkNormalList() || !linkAllModesList()){
+
+	}
+}
+
+
