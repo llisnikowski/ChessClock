@@ -37,14 +37,13 @@ public:
 
 	constexpr bool operator+=(const TimeHMS & t);
 	constexpr bool operator-=(const TimeHMS & t);
-	constexpr bool operator==(const TimeHMS & t);
 
-	constexpr bool operator<(const TimeHMS & t);
-	constexpr bool operator<=(const TimeHMS & t);
-	constexpr bool operator>(const TimeHMS & t);
-	constexpr bool operator>=(const TimeHMS & t);
-	constexpr bool operator==(const TimeHMS & t);
-	constexpr bool operator!=(const TimeHMS & t);
+	constexpr bool operator<(const TimeHMS & t) const;
+	constexpr bool operator<=(const TimeHMS & t) const;
+	constexpr bool operator>(const TimeHMS & t) const;
+	constexpr bool operator>=(const TimeHMS & t) const;
+	constexpr bool operator==(const TimeHMS & t) const;
+	constexpr bool operator!=(const TimeHMS & t) const;
 
 private:
 	constexpr bool correctTime();
@@ -154,43 +153,37 @@ constexpr bool TimeHMS::operator-=(const TimeHMS & t)
 	return correctTime();
 }
 
-constexpr bool TimeHMS::operator==(const TimeHMS & t)
-{
-	return hour_ == t.hour_ && minute_ == t.minute_ && second_ == t.second_;
-}
-
-
-constexpr bool TimeHMS::operator<(const TimeHMS & t)
+constexpr bool TimeHMS::operator<(const TimeHMS & t) const
 {
 	return this->hour_ < t.hour_
-		|| this->hour_ == t.hour_ && ( this->minute_ < t.minute_
-		|| this->minute_ == t.minute_ && this->second_ < t.second_);
+		|| (this->hour_ == t.hour_ && ( this->minute_ < t.minute_
+		|| (this->minute_ == t.minute_ && this->second_ < t.second_)));
 }
-constexpr bool TimeHMS::operator<=(const TimeHMS & t)
+constexpr bool TimeHMS::operator<=(const TimeHMS & t) const
 {
 	return this->hour_ < t.hour_
-		|| this->hour_ == t.hour_ && ( this->minute_ < t.minute_
-		|| this->minute_ == t.minute_ && this->second_ <= t.second_);
+		|| (this->hour_ == t.hour_ && ( this->minute_ < t.minute_
+		|| (this->minute_ == t.minute_ && this->second_ <= t.second_)));
 }
-constexpr bool TimeHMS::operator>(const TimeHMS & t)
+constexpr bool TimeHMS::operator>(const TimeHMS & t) const
 {
 	return this->hour_ > t.hour_
-		|| this->hour_ == t.hour_ && ( this->minute_ > t.minute_
-		|| this->minute_ == t.minute_ && this->second_ > t.second_);
+		|| (this->hour_ == t.hour_ && ( this->minute_ > t.minute_
+		|| (this->minute_ == t.minute_ && this->second_ > t.second_)));
 }
-constexpr bool TimeHMS::operator>=(const TimeHMS & t)
+constexpr bool TimeHMS::operator>=(const TimeHMS & t) const
 {
 	return this->hour_ > t.hour_
-		|| this->hour_ == t.hour_ && ( this->minute_ > t.minute_
-		|| this->minute_ == t.minute_ && this->second_ >= t.second_);
+		|| ( this->hour_ == t.hour_ && ( this->minute_ > t.minute_
+		|| (this->minute_ == t.minute_ && this->second_ >= t.second_)));
 }
-constexpr bool TimeHMS::operator==(const TimeHMS & t)
+constexpr bool TimeHMS::operator==(const TimeHMS & t) const
 {
 	return this->hour_ == t.hour_
 		&& this->minute_ == t.minute_
 		&& this->second_ == t.second_;
 }
-constexpr bool TimeHMS::operator!=(const TimeHMS & t)
+constexpr bool TimeHMS::operator!=(const TimeHMS & t) const
 {
 	return this->hour_ != t.hour_
 		|| this->minute_ != t.minute_
