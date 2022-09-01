@@ -8,6 +8,10 @@
 #ifndef MENU_ELEMENT_HPP_
 #define MENU_ELEMENT_HPP_
 
+#include <stdint.h>
+#include "menuType.hpp"
+
+
 namespace Menu {
 
 class Element {
@@ -15,10 +19,12 @@ public:
 	Element(const char* name);
 	virtual ~Element();
 
-	const char* getName() const;
+	const char * getName() const;
 
-	virtual void markInList();
-	virtual void selected();
+	virtual bool sendImpulse(uint16_t id, uint16_t state = 0){return false;}
+	virtual bool update(){return false;}
+
+	virtual MenuType getMenuType(){return MenuType::element;}
 
 private:
 	const char* name_;

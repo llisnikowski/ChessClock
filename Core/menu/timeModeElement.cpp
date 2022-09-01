@@ -7,7 +7,7 @@
 
 #include "timeModeElement.hpp"
 
-TimeModeElement::TimeModeElement(const char * name, CTMode * mode)
+TimeModeElement::TimeModeElement(const char * name, CTMode & mode)
 	: Menu::Element{name}, mode_{mode}
 {
 }
@@ -18,5 +18,5 @@ TimeModeElement::~TimeModeElement()
 
 auto TimeModeElement::getMode() const -> const CTMode *
 {
-	return mode_;
+	return &mode_;
 }

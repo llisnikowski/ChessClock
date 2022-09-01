@@ -28,18 +28,19 @@ public:
 
 	void setLooping(bool isLoop){ loopList_ = isLoop;}
 
-	void nextElement();
-	void prevElement();
+	void nextElement() override;
+	void prevElement() override;
 
 	int16_t getCurIndex(){return currentIndex_;}
 	void setCurIndex(int16_t index);
 	void reMarkInList(){elements_.markInList();};
 	int16_t getSize() const override {return Size;}
-	T * getCurElement(){ return elements_[currentIndex_];}
+	Element * getCurElement() override { return elements_[currentIndex_];}
+	T * getCurElementType() { return elements_[currentIndex_];}
 
 	virtual void changedIndex(){}
 
-private:
+protected:
 	T * elements_[Size];
 	int16_t currentIndex_;
 	bool loopList_;
@@ -77,7 +78,6 @@ void List<Size, T>::nextElement()
 			currentIndex_ = Size - 1;
 	}
 	changedIndex();
-	elements_.markInList();
 }
 
 template <int16_t Size, typename T>
@@ -92,7 +92,6 @@ void List<Size, T>::prevElement()
 	}
 
 	changedIndex();
-	elements_.markInList();
 }
 
 template <int16_t Size, typename T>

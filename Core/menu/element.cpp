@@ -24,11 +24,6 @@ const char* Element::getName() const
 	return name_;
 }
 
-void Element::markInList()
-{}
-
-void Element::selected()
-{}
 
 
 

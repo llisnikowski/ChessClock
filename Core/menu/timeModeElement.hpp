@@ -10,6 +10,7 @@
 
 #include "../menu/element.hpp"
 #include "../chessTimeMode/base.hpp"
+#include "menuType.hpp"
 
 
 
@@ -18,13 +19,15 @@ class TimeModeElement: public Menu::Element
 public:
 	using CTMode = ChessTimeMode::Base;
 
-	TimeModeElement(const char* name, CTMode * mode);
+	TimeModeElement(const char* name, CTMode & mode);
 	virtual ~TimeModeElement();
 
 	const CTMode * getMode() const;
 
+	MenuType getMenuType() override {return MenuType::timeModeElement;}
+
 private:
-	CTMode * mode_;
+	CTMode & mode_;
 };
 
 #endif /* CHESSMENU_TIMEMODEELEMENT_HPP_ */
