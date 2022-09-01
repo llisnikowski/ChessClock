@@ -5,8 +5,9 @@
  *      Author: Łukasz
  */
 
-#include "../menuGenerator/MenuGenerator.hpp"
+#include "menuGenerator.hpp"
 
+#include "../menu/mainlist.hpp"
 #include "../menu/list.hpp"
 #include "../menu/timeModeElement.hpp"
 #include "../chessTimeMode/base.hpp"
@@ -17,7 +18,7 @@ constexpr uint8_t BLITZ_COUNT{2};
 constexpr uint8_t RAPID_COUNT{4};
 constexpr uint8_t NORMAL_COUNT{2};
 
-Menu::List<4,Menu::ListBase> mainList{""};
+MainList<mainListSize> mainList;
 Menu::List<BLITZ_COUNT + RAPID_COUNT + NORMAL_COUNT, TimeModeElement> allModesList{"All"};
 Menu::List<BLITZ_COUNT,TimeModeElement> blitzList{"Blitz"};
 Menu::List<RAPID_COUNT,TimeModeElement> rapidList{"Rapid"};
@@ -35,9 +36,9 @@ ChessTimeMode::Normal cTM_1h{TimeHMS{1, 0, 0}};
 ChessTimeMode::Normal cTM_1h30m{TimeHMS{1, 30, 0}};
 
 
-TimeModeElement blitzElements[BLITZ_COUNT]{{"1min", &cTM_1m}, {"5m", &cTM_5m}};
-TimeModeElement rapidElements[RAPID_COUNT]{{"10min", &cTM_10m}, {"15m", &cTM_15m}, {"20min", &cTM_20m}, {"30min", &cTM_30m}};
-TimeModeElement normalElements[NORMAL_COUNT]{{"1h", &cTM_1h}, {"1h 30min", &cTM_1h30m}};
+TimeModeElement blitzElements[BLITZ_COUNT]{{"1min", cTM_1m}, {"5min", cTM_5m}};
+TimeModeElement rapidElements[RAPID_COUNT]{{"10min", cTM_10m}, {"15min", cTM_15m}, {"20min", cTM_20m}, {"30min", cTM_30m}};
+TimeModeElement normalElements[NORMAL_COUNT]{{"1h", cTM_1h}, {"1h 30min", cTM_1h30m}};
 
 
 
@@ -49,7 +50,7 @@ MenuGenerator::~MenuGenerator()
 {
 }
 
-inline bool linkMainList()
+bool MenuGenerator::linkMainList()
 {
 	return mainList.setElement(0, &allModesList)
 			&& mainList.setElement(1, &blitzList)
@@ -57,7 +58,7 @@ inline bool linkMainList()
 			&& mainList.setElement(3, &normalList);
 }
 
-inline bool linkBlitzList()
+bool MenuGenerator::linkBlitzList()
 {
 	for(int i = 0; i < BLITZ_COUNT ; i++){
 		if(!blitzList.setElement(i, &blitzElements[i])){
@@ -67,7 +68,7 @@ inline bool linkBlitzList()
 	return true;
 }
 
-inline bool linkRapidList()
+bool MenuGenerator::linkRapidList()
 {
 	for(int i = 0; i < RAPID_COUNT ; i++){
 		if(!rapidList.setElement(i, &rapidElements[i])){
@@ -77,7 +78,7 @@ inline bool linkRapidList()
 	return true;
 }
 
-inline bool linkNormalList()
+bool MenuGenerator::linkNormalList()
 {
 	for(int i = 0; i < NORMAL_COUNT ; i++){
 		if(!normalList.setElement(i, &normalElements[i])){
@@ -87,7 +88,7 @@ inline bool linkNormalList()
 	return true;
 }
 
-inline bool linkAllModesList()
+bool MenuGenerator::linkAllModesList()
 {
 	for(int i = 0; i < BLITZ_COUNT ; i++){
 		if(!allModesList.setElement(i, &blitzElements[i])){
@@ -95,12 +96,12 @@ inline bool linkAllModesList()
 		}
 	}
 	for(int i = 0; i < RAPID_COUNT ; i++){
-		if(!allModesList.setElement(i, &rapidElements[i])){
+		if(!allModesList.setElement(i + BLITZ_COUNT, &rapidElements[i])){
 			return false;
 		}
 	}
 	for(int i = 0; i < NORMAL_COUNT ; i++){
-		if(!allModesList.setElement(i, &normalElements[i])){
+		if(!allModesList.setElement(i + BLITZ_COUNT + RAPID_COUNT, &normalElements[i])){
 			return false;
 		}
 	}
@@ -110,11 +111,29 @@ inline bool linkAllModesList()
 void MenuGenerator::link()
 {
 	if(!linkMainList()){
-
+		while(true);
 	}
 	if(!linkBlitzList() || !linkRapidList() || !linkNormalList() || !linkAllModesList()){
-
+		while(true);
 	}
 }
+
+
+MainList<mainListSize> * MenuGenerator::getMainList()
+{
+	return &mainList;
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
