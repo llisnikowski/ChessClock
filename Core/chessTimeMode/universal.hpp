@@ -1,0 +1,36 @@
+/*
+ * Universal.h
+ *
+ *  Created on: 1 wrz 2022
+ *      Author: Łukasz
+ */
+
+#ifndef CHESSTIMEMODE_UNIVERSAL_HPP_
+#define CHESSTIMEMODE_UNIVERSAL_HPP_
+
+#include "base.hpp"
+#include "normal.hpp"
+#include "../time/timeHMS.hpp"
+
+namespace ChessTimeMode {
+
+class Universal : public Base
+{
+public:
+	Universal();
+	virtual ~Universal();
+
+	void operator =(Normal & mode);
+
+	const TimeHMS & getTime1() const override;
+	const TimeHMS & getTime2() const override;
+	TimeHMS & getTime1() override;
+	TimeHMS & getTime2() override;
+
+private:
+	TimeHMS times_[2];
+};
+
+} /* namespace ChessTimeMode */
+
+#endif /* CHESSTIMEMODE_UNIVERSAL_HPP_ */

@@ -12,12 +12,22 @@ namespace ChessTimeMode {
 
 const TimeHMS & Normal::getTime1() const
 {
-	return time;
+	return time_;
 }
 
 const TimeHMS & Normal::getTime2() const
 {
-	return time;
+	return time_;
+}
+
+TimeHMS & Normal::getTime1()
+{
+	return time_;
+}
+
+TimeHMS & Normal::getTime2()
+{
+	return time_;
 }
 
 

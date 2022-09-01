@@ -24,6 +24,8 @@ public:
 
 	virtual const TimeHMS & getTime1() const = 0;
 	virtual const TimeHMS & getTime2() const = 0;
+	virtual TimeHMS & getTime1() = 0;
+	virtual TimeHMS & getTime2() = 0;
 
 private:
 };

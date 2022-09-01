@@ -9,7 +9,6 @@
 
 namespace ChessTimeMode {
 
-
 Base::~Base()
 {
 }

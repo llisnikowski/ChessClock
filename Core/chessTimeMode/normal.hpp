@@ -17,18 +17,20 @@ class Normal : public Base
 {
 public:
 	constexpr Normal()
-		:time{}
+		:time_{}
 	{}
 	explicit constexpr Normal(const TimeHMS & t)
-		:time{t}
+		:time_{t}
 	{}
 	virtual ~Normal() = default;
 
 	const TimeHMS & getTime1() const override;
 	const TimeHMS & getTime2() const override;
+	TimeHMS & getTime1() override;
+	TimeHMS & getTime2() override;
 
 private:
-	TimeHMS time;
+	TimeHMS time_;
 };
 
 
