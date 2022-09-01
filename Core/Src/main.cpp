@@ -27,9 +27,15 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
+#include "config.hpp"
+
 #include "../uartLog/uartLog.h"
 #include "../button/button.hpp"
 #include "../diode/diode.hpp"
+#include "../ssd1306/oledDisplay.h"
+#include "../displayManager/displayManager.hpp"
+#include "../menuGenerator/menuGenerator.hpp"
+#include "../menuManager/menuManager.hpp"
 
 /* USER CODE END Includes */
 
@@ -62,6 +68,27 @@ void SystemClock_Config(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
+Button bLeft{BUTTON_LEFT_GPIO_Port, BUTTON_LEFT_Pin};
+Button bRight{BUTTON_RIGHT_GPIO_Port, BUTTON_RIGHT_Pin};
+Button bPlay{BUTTON_PLAY_GPIO_Port, BUTTON_PLAY_Pin};
+Button bOptions{BUTTON_OPTIONS_GPIO_Port, BUTTON_OPTIONS_Pin};
+Button bPlus{BUTTON_PLUS_GPIO_Port, BUTTON_PLUS_Pin};
+Button bMinus{BUTTON_MINUS_GPIO_Port, BUTTON_MINUS_Pin};
+Button bPlayer1{BUTTON_PLAYER1_GPIO_Port, BUTTON_PLAYER1_Pin};
+Button bPlayer2{BUTTON_PLAYER2_GPIO_Port, BUTTON_PLAYER2_Pin};
+
+Diode dPlayer1{DIODE_PLAYER1_GPIO_Port, DIODE_PLAYER1_Pin};
+Diode dPlayer2{DIODE_PLAYER2_GPIO_Port, DIODE_PLAYER2_Pin};
+
+MenuGenerator menuGenerator;
+
+OledDisplay display1(&hi2c1, 128, 32);
+OledDisplay display2(&hi2c2, 128, 32);
+
+DisplayManager displayManager(display1, display2);
+
+MenuManager menuManager;
+
 /* USER CODE END 0 */
 
 /**
@@ -71,18 +98,6 @@ void SystemClock_Config(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-
-	Button bLeft{BUTTON_LEFT_GPIO_Port, BUTTON_LEFT_Pin};
-	Button bRight{BUTTON_RIGHT_GPIO_Port, BUTTON_RIGHT_Pin};
-	Button bPlay{BUTTON_PLAY_GPIO_Port, BUTTON_PLAY_Pin};
-	Button bOptions{BUTTON_OPTIONS_GPIO_Port, BUTTON_OPTIONS_Pin};
-	Button bPlus{BUTTON_PLUS_GPIO_Port, BUTTON_PLUS_Pin};
-	Button bMinus{BUTTON_MINUS_GPIO_Port, BUTTON_MINUS_Pin};
-	Button bPlayer1{BUTTON_PLAYER1_GPIO_Port, BUTTON_PLAYER1_Pin};
-	Button bPlayer2{BUTTON_PLAYER2_GPIO_Port, BUTTON_PLAYER2_Pin};
-
-	Diode dPlayer1{DIODE_PLAYER1_GPIO_Port, DIODE_PLAYER1_Pin};
-	Diode dPlayer2{DIODE_PLAYER2_GPIO_Port, DIODE_PLAYER2_Pin};
 
 
   /* USER CODE END 1 */
@@ -112,6 +127,18 @@ int main(void)
   MX_TIM4_Init();
   /* USER CODE BEGIN 2 */
 
+  HAL_Delay(1000);
+  menuGenerator.link();
+
+  display1.init(0x78);
+  display2.init(0x78);
+  display1.drawPixel(1, 1);
+  display1.display();
+  display2.drawPixel(1, 1);
+  display2.display();
+
+  menuManager.begin(&displayManager, menuGenerator.getMainList());
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -130,22 +157,24 @@ int main(void)
   while (1)
   {
 	  if(bLeft.fallingEdge(true))
-		  printf("left\n");
+		  menuManager.sendImpulse(static_cast<uint16_t>(SignalId::leftButton));
 	  if(bRight.fallingEdge(true))
-		  printf("right\n");
+		  menuManager.sendImpulse(static_cast<uint16_t>(SignalId::rightButton));
 	  if(bPlay.fallingEdge(true))
-		  printf("play\n");
+		  menuManager.sendImpulse(static_cast<uint16_t>(SignalId::playButton));
 	  if(bOptions.fallingEdge(true))
-		  printf("options\n");
-	  if(bPlus.fallingEdge(true))
-		  printf("Plus\n");
+		  menuManager.sendImpulse(static_cast<uint16_t>(SignalId::optionButton));
 	  if(bMinus.fallingEdge(true))
-		  printf("minus\n");
-	  if(bPlayer1.fallingEdge(true))
-		  printf("player1\n");
-	  if(bPlayer2.fallingEdge(true))
-		  printf("player2\n");
+		  menuManager.sendImpulse(static_cast<uint16_t>(SignalId::minusButton));
+	  if(bPlus.fallingEdge(true))
+		  menuManager.sendImpulse(static_cast<uint16_t>(SignalId::plusButton));
 
+	  if(bPlayer1.fallingEdge(true))
+		  menuManager.sendImpulse(static_cast<uint16_t>(SignalId::player1Button));
+	  if(bPlayer2.fallingEdge(true))
+		  menuManager.sendImpulse(static_cast<uint16_t>(SignalId::player2Button));
+
+	  menuManager.update();
 
     /* USER CODE END WHILE */
 
