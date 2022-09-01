@@ -71,7 +71,7 @@ public:
 	void init(uint8_t address);
 
 	void clear();
-	void setPixel(int16_t x, int16_t y, uint8_t color) final;
+	void drawPixel(int16_t x, int16_t y, uint8_t color = 1) final;
 
 	void display();
 

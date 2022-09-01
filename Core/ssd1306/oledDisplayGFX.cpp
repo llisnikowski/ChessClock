@@ -56,9 +56,9 @@ void OledDisplayGFX::drawLine(int16_t x0, int16_t y0, int16_t x1, int16_t y1, ui
 
 	for (; x0 <= x1; x0++) {
 		if (steep) {
-			setPixel(y0, x0, color);
+			drawPixel(y0, x0, color);
 		} else {
-			setPixel(x0, y0, color);
+			drawPixel(x0, y0, color);
 		}
 		err -= dy;
 		if (err < 0) {
@@ -100,13 +100,13 @@ void OledDisplayGFX::drawChar(unsigned char c, uint8_t size, uint8_t color, uint
 		for (int8_t j = 0; j < 8; j++, line >>= 1) {
 			if (line & 1) {
 				if (size == 1)
-					setPixel(cursorX_ + i, cursorY_ + j, color);
+					drawPixel(cursorX_ + i, cursorY_ + j, color);
 				else
 					fillRect(cursorX_ + i * size, cursorY_ + j * size, size,
 							size, color);
 			} else if (bg != color) {
 				if (size == 1)
-					setPixel(cursorX_ + i, cursorY_ + j, bg);
+					drawPixel(cursorX_ + i, cursorY_ + j, bg);
 				else
 					fillRect(cursorX_ + i * size, cursorY_ + j * size, size,
 							size, bg);
@@ -136,7 +136,7 @@ void OledDisplayGFX::drawBitmap(uint16_t x, uint16_t y, const uint8_t *bitmap, u
 	for(int j=0; j<height; j++){
 		for(int i=0; i<width; i++){
 			if( bitmap[j*byteWidth+i/8] & (128 >> (i & 7)) ){
-				setPixel(x+i, y+j, color);
+				drawPixel(x+i, y+j, color);
 			}
 		}
 	}

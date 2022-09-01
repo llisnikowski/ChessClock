@@ -13,9 +13,7 @@ OledDisplay::OledDisplay(I2C_HandleTypeDef* i2c, uint8_t width, uint8_t height)
 	:OledDisplayGFX(width, height), DrawInBorder(width, height), i2cHandle_(i2c)
 {
 	bufSize_ = width * height / 8;
-	buffor_ = new uint8_t[bufSize_];//{};
-	buffor_[20] = 7;
-	buffor_[50] = 21;
+	buffor_ = new uint8_t[bufSize_]{};
 }
 
 OledDisplay::~OledDisplay()
@@ -105,7 +103,7 @@ void OledDisplay::clear()
 }
 
 
-void OledDisplay::setPixel(int16_t x, int16_t y, uint8_t color)
+void OledDisplay::drawPixel(int16_t x, int16_t y, uint8_t color)
 {
 	if(x < 0 || x >= width_) return;
 	if(y < 0 || y >= height_) return;

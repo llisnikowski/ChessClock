@@ -17,7 +17,7 @@ public:
 	OledDisplayGFX(uint8_t width, uint8_t height);
 	virtual ~OledDisplayGFX();
 
-	virtual void setPixel(int16_t x, int16_t y, uint8_t color) = 0;
+	virtual void drawPixel(int16_t x, int16_t y, uint8_t color) = 0;
 	void drawLine(int16_t x0, int16_t y0, int16_t x1, int16_t y1, uint8_t color=1);
 	void fillRect(int16_t x, int16_t y, int16_t width, int16_t height, uint8_t color=1);
 	void drawFastVLine(int16_t x, int16_t y, int16_t height, uint8_t color=1);
