@@ -12,6 +12,8 @@
 #include "../menu/listBase.hpp"
 #include "../menu/mainList.hpp"
 #include "../menu/timeModeElement.hpp"
+#include "../time/timeText.hpp"
+
 
 DisplayManager::DisplayManager(OledDisplay & display1, OledDisplay & display2)
 	:display1_(display1), display2_(display2), currentElement_{}
@@ -43,7 +45,10 @@ void DisplayManager::display(MainList<mainListSize> * list)
 		display1_.print(subList->getName(), 1);
 		if(auto * subEl = subList->getCurElement()){
 			if(subEl->getMenuType() == MenuType::timeModeElement){
-				display(display2_, static_cast<TimeModeElement*>(subEl));
+				display2_.clear();
+				display2_.setCursor(5, 5);
+				display2_.print(TimeText{static_cast<TimeModeElement*>(subEl)->getMode()->getTime1()}(), 1);
+				display2_.display();
 			}
 		}
 	}
@@ -61,10 +66,6 @@ void DisplayManager::display(OledDisplay & display, TimeModeElement * timeModeEl
 	currentElement_ = timeModeElement;
 }
 
-
-void DisplayManager::displayTime(OledDisplay & display, const TimeHMS & time)
-{
-}
 
 
 

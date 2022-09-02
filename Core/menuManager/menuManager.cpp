@@ -37,13 +37,7 @@ void MenuManager::update()
 {
 	if(!currentElement_) return;
 	if(currentElement_->update()){
-		if(currentElement_ == loadingScreen_){
-			currentElement_ = mainList_;
-			displayManager_->display(mainList_);
-		}
-		else if(currentElement_ == mainList_){
-		}
-		else if(currentElement_ == configTime_){
+		if(currentElement_ == mainList_){
 		}
 		else if(currentElement_ == gameElement_){
 		}

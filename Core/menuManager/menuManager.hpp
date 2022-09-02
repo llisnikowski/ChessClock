@@ -38,9 +38,7 @@ private:
 
 	menuEl currentElement_;
 
-	menuEl loadingScreen_;
 	menuList mainList_;
-	menuEl configTime_;
 	menuEl gameElement_;
 };
 
