@@ -14,6 +14,12 @@
 
 namespace Menu {
 
+enum{
+	noAction,
+	used,
+	changeElement
+};
+
 class Element {
 public:
 	Element(const char* name);
@@ -21,8 +27,8 @@ public:
 
 	const char * getName() const;
 
-	virtual bool sendImpulse(uint16_t id, uint16_t state = 0){return false;}
-	virtual bool update(){return false;}
+	virtual uint8_t sendImpulse(uint16_t id, uint16_t state = 0){return 0;}
+	virtual uint8_t update(){return 0;}
 
 	virtual MenuType getMenuType(){return MenuType::element;}
 

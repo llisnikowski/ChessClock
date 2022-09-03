@@ -11,6 +11,7 @@
 #include "../menu/listBase.hpp"
 #include "../menu/mainList.hpp"
 #include "../displayManager/displayManager.hpp"
+#include "../menu/gameManager.hpp"
 
 
 MenuManager::MenuManager()
@@ -23,9 +24,10 @@ MenuManager::~MenuManager()
 }
 
 
-void MenuManager::begin(DisplayManager * displayManager, menuList list)
+void MenuManager::begin(DisplayManager * displayManager, menuList list, gameMgr gameManager)
 {
 	displayManager_ = displayManager;
+	gameManager_ = gameManager;
 	mainList_ = list;
 	currentElement_ = list;
 	displayManager_->display(mainList_);
@@ -39,7 +41,7 @@ void MenuManager::update()
 	if(currentElement_->update()){
 		if(currentElement_ == mainList_){
 		}
-		else if(currentElement_ == gameElement_){
+		else if(currentElement_ == gameManager_){
 		}
 	}
 }
@@ -47,7 +49,17 @@ void MenuManager::update()
 void MenuManager::sendImpulse(uint16_t id, uint16_t state)
 {
 	if(!currentElement_) return;
-	if(currentElement_->sendImpulse(id, state)){
+	uint8_t signal = currentElement_->sendImpulse(id, state);
+	if(signal == Menu::used){
 		displayManager_->findAndDisplay(currentElement_);
+	}
+	else if(signal == Menu::changeElement){
+		if(currentElement_ == mainList_){
+			currentElement_ = gameManager_;
+			displayManager_->display(gameManager_);
+		}
+		else {
+			displayManager_->findAndDisplay(currentElement_);
+		}
 	}
 }

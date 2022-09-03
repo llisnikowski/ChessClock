@@ -29,7 +29,7 @@ public:
 	}
 	virtual ~MainList() = default;
 
-	bool sendImpulse(uint16_t id, uint16_t state = 0) override;
+	uint8_t sendImpulse(uint16_t id, uint16_t state = 0) override;
 	MenuType getMenuType() override {return MenuType::mainList;}
 };
 
@@ -39,26 +39,30 @@ public:
 
 
 template <int16_t Size>
-bool MainList<Size>::sendImpulse(uint16_t id, uint16_t state)
+uint8_t MainList<Size>::sendImpulse(uint16_t id, uint16_t state)
 {
 	switch(static_cast<SignalId>(id))
 	{
 	case SignalId::leftButton:
 		this->prevElement();
-		return true;
+		return Menu::used;
 	case SignalId::rightButton:
 		this->nextElement();
-		return true;
+		return Menu::used;
 	case SignalId::minusButton:
 		if(!menuL::elements_[menuL::currentIndex_]) return false;
 		menuL::elements_[menuL::currentIndex_]->prevElement();
-		return true;
+		return Menu::used;
 	case SignalId::plusButton:
 		if(!menuL::elements_[menuL::currentIndex_]) return false;
 		menuL::elements_[menuL::currentIndex_]->nextElement();
-		return true;
+		return Menu::used;
+	case SignalId::playButton:
+		if(!menuL::elements_[menuL::currentIndex_]) return false;
+		menuL::elements_[menuL::currentIndex_]->nextElement();
+		return Menu::changeElement;
 	default:
-		return false;
+		return Menu::used;
 	}
 }
 

@@ -11,25 +11,28 @@
 #include <stdint.h>
 #include "../menuGenerator/menuGenerator.hpp"
 
-namespace Menu{
+namespace Menu
+{
 class Element;
 class ListBase;
 }
 
 class DisplayManager;
-
 template <int16_t Size>
 class MainList;
+class GameManager;
+
 
 class MenuManager {
 public:
 	using menuEl = Menu::Element *;
 	using menuList = MainList<mainListSize> *;
+	using gameMgr = GameManager *;
 
 	MenuManager();
 	~MenuManager();
 
-	void begin(DisplayManager * displayManager, menuList list);
+	void begin(DisplayManager * displayManager, menuList list, gameMgr gameManager);
 	void update();
 	void sendImpulse(uint16_t id, uint16_t state = 0);
 
@@ -39,7 +42,7 @@ private:
 	menuEl currentElement_;
 
 	menuList mainList_;
-	menuEl gameElement_;
+	gameMgr gameManager_;
 };
 
 #endif /* MENUMANAGER_MENUMANAGER_HPP_ */

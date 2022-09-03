@@ -14,8 +14,10 @@
 class OledDisplay;
 class TimeModeElement;
 class TimeHMS;
+class GameManager;
 
-namespace Menu{
+namespace Menu
+{
 class Element;
 class ListBase;
 }
@@ -31,6 +33,7 @@ public:
 
 	void findAndDisplay(Menu::Element * el);
 	void display(MainList<mainListSize> * list);
+	void display(GameManager * gameManager);
 	void display(OledDisplay & display, TimeModeElement * timeModeElement);
 
 	void displayTime(OledDisplay & display, const TimeHMS & time);

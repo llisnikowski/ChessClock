@@ -12,6 +12,7 @@
 #include "../menu/listBase.hpp"
 #include "../menu/mainList.hpp"
 #include "../menu/timeModeElement.hpp"
+#include "../menu/gameManager.hpp"
 #include "../time/timeText.hpp"
 
 
@@ -55,6 +56,16 @@ void DisplayManager::display(MainList<mainListSize> * list)
 
 	display1_.display();
 	currentElement_ = list;
+}
+
+void DisplayManager::display(GameManager * gameManager)
+{
+	display1_.clear();
+	display2_.clear();
+	display1_.setCursor(5, 5);
+	display2_.setCursor(5, 5);
+	display1_.display();
+	display2_.display();
 }
 
 void DisplayManager::display(OledDisplay & display, TimeModeElement * timeModeElement)
