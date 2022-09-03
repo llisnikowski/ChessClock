@@ -27,8 +27,8 @@ public:
 
 	const char * getName() const;
 
-	virtual uint8_t sendImpulse(uint16_t id, uint16_t state = 0){return 0;}
-	virtual uint8_t update(){return 0;}
+	virtual uint8_t sendImpulse(uint16_t id, uint16_t state = 0){return noAction;}
+	virtual uint8_t update(){return noAction;}
 
 	virtual MenuType getMenuType(){return MenuType::element;}
 

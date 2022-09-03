@@ -5,6 +5,7 @@
  *      Author: Łukasz
  */
 
+#include "main.h"
 #include "config.hpp"
 #include "gameManager.hpp"
 #include "../chessTimeMode/base.hpp"
@@ -29,19 +30,33 @@ uint8_t GameManager::sendImpulse(uint16_t id, uint16_t state)
 	{
 	case SignalId::playButton:
 		if(gameState_ == stop){
-
+			gameState_ = play;
+			if(!player_){
+				oldTick = HAL_GetTick() - oneSecound + player1Ticks_;
+			}
+			else{
+				oldTick = HAL_GetTick() - oneSecound + player2Ticks_;
+			}
 		}
 		else if(gameState_ == play){
-
+			gameState_ = stop;
+			if(!player_){
+				player1Ticks_ = HAL_GetTick() - oldTick;
+			}
+			else{
+				player2Ticks_ = HAL_GetTick() - oldTick;
+			}
 		}
 		return 1;
 	case SignalId::player1Button:
 		if(gameState_ == play && !player_){
+			player_ = true;
 			return 1;
 		}
 		return 0;
 	case SignalId::player2Button:
 		if(gameState_ == play && player_ ){
+			player_ = false;
 			return 1;
 		}
 		return 0;
@@ -73,3 +88,26 @@ const ChessTimeMode::Universal & GameManager::getChessTimeMode() const
 {
 	return mode_;
 }
+
+
+uint8_t GameManager::update()
+{
+	if(gameState_ == play){
+		uint32_t curTick = HAL_GetTick();
+		if(curTick - oldTick >= oneSecound){
+			while(curTick - oldTick >= oneSecound){
+				if(!player_)
+					mode_.getTime1().addSeconds(-1);
+				else
+					mode_.getTime2().addSeconds(-1);
+				oldTick += 1000;
+			}
+		return Menu::used;
+		}
+	}
+	return Menu::noAction;
+}
+
+
+
+

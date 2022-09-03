@@ -19,21 +19,27 @@ class Base;
 
 class GameManager : public Menu::Element
 {
+public:
+	static constexpr uint16_t oneSecound = 1000;
 	enum{
 		stop,
 		play
 	};
 
-public:
 	GameManager();
 	~GameManager();
 
-	uint8_t sendImpulse(uint16_t id, uint16_t state = 0) override;
 	void setChessTimeMode(const ChessTimeMode::Base * mode);
 	const ChessTimeMode::Universal & getChessTimeMode() const;
 
+	uint8_t update() override;
+	uint8_t sendImpulse(uint16_t id, uint16_t state = 0) override;
+
 private:
 	ChessTimeMode::Universal mode_;
+	uint16_t player1Ticks_;
+	uint16_t player2Ticks_;
+	uint32_t oldTick;
 
 	uint8_t gameState_;
 	bool player_;

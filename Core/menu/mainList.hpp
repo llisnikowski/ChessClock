@@ -68,7 +68,6 @@ uint8_t MainList<Size>::sendImpulse(uint16_t id, uint16_t state)
 		return Menu::used;
 	case SignalId::playButton:
 		if(!menuL::elements_[menuL::currentIndex_]) return false;
-		menuL::elements_[menuL::currentIndex_]->nextElement();
 		return Menu::changeElement;
 	default:
 		return Menu::used;

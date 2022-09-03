@@ -42,6 +42,7 @@ void MenuManager::update()
 		if(currentElement_ == mainList_){
 		}
 		else if(currentElement_ == gameManager_){
+			displayManager_->display(gameManager_);
 		}
 	}
 }
