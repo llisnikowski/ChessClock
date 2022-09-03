@@ -19,7 +19,7 @@ Universal::~Universal()
 }
 
 
-void Universal::operator =(Normal & mode)
+void Universal::operator =(const Normal & mode)
 {
 	times_[0] = mode.getTime1();
 	times_[1] = mode.getTime2();

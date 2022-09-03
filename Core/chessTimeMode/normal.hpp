@@ -10,6 +10,7 @@
 
 #include "../time/timeHMS.hpp"
 #include "base.hpp"
+#include "modeType.hpp"
 
 namespace ChessTimeMode {
 
@@ -23,6 +24,8 @@ public:
 		:time_{t}
 	{}
 	virtual ~Normal() = default;
+
+	const ModeType getMenuType() const override {return ModeType::normal;}
 
 	const TimeHMS & getTime1() const override;
 	const TimeHMS & getTime2() const override;

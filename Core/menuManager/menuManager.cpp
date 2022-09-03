@@ -56,6 +56,7 @@ void MenuManager::sendImpulse(uint16_t id, uint16_t state)
 	else if(signal == Menu::changeElement){
 		if(currentElement_ == mainList_){
 			currentElement_ = gameManager_;
+			gameManager_->setChessTimeMode(mainList_->getCurrentTimeMode());
 			displayManager_->display(gameManager_);
 		}
 		else {

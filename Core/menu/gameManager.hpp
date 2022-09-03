@@ -14,7 +14,7 @@
 
 namespace ChessTimeMode
 {
-	class Base;
+class Base;
 }
 
 class GameManager : public Menu::Element
@@ -29,7 +29,8 @@ public:
 	~GameManager();
 
 	uint8_t sendImpulse(uint16_t id, uint16_t state = 0) override;
-
+	void setChessTimeMode(const ChessTimeMode::Base * mode);
+	const ChessTimeMode::Universal & getChessTimeMode() const;
 
 private:
 	ChessTimeMode::Universal mode_;

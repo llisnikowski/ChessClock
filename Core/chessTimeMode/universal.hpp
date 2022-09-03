@@ -11,6 +11,7 @@
 #include "base.hpp"
 #include "normal.hpp"
 #include "../time/timeHMS.hpp"
+#include "modeType.hpp"
 
 namespace ChessTimeMode {
 
@@ -20,7 +21,9 @@ public:
 	Universal();
 	virtual ~Universal();
 
-	void operator =(Normal & mode);
+	void operator =(const Normal & mode);
+
+	const ModeType getMenuType() const override {return ModeType::universal;}
 
 	const TimeHMS & getTime1() const override;
 	const TimeHMS & getTime2() const override;

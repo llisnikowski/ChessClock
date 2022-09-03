@@ -14,6 +14,7 @@
 #include "../menu/timeModeElement.hpp"
 #include "../menu/gameManager.hpp"
 #include "../time/timeText.hpp"
+#include "../chessTimeMode/universal.hpp"
 
 
 DisplayManager::DisplayManager(OledDisplay & display1, OledDisplay & display2)
@@ -60,10 +61,16 @@ void DisplayManager::display(MainList<mainListSize> * list)
 
 void DisplayManager::display(GameManager * gameManager)
 {
+	const ChessTimeMode::Universal mode = gameManager->getChessTimeMode();
+
 	display1_.clear();
 	display2_.clear();
 	display1_.setCursor(5, 5);
 	display2_.setCursor(5, 5);
+
+	display1_.print(TimeText(mode.getTime1()).getText());
+	display2_.print(TimeText(mode.getTime2()).getText());
+
 	display1_.display();
 	display2_.display();
 }

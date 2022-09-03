@@ -8,6 +8,7 @@
 #ifndef CHESSTIMEMODE_BASE_HPP_
 #define CHESSTIMEMODE_BASE_HPP_
 
+#include "modeType.hpp"
 #include "../time/timeHMS.hpp"
 
 
@@ -26,6 +27,8 @@ public:
 	virtual const TimeHMS & getTime2() const = 0;
 	virtual TimeHMS & getTime1() = 0;
 	virtual TimeHMS & getTime2() = 0;
+
+	virtual const ModeType getMenuType() const {return ModeType::base;}
 
 private:
 };

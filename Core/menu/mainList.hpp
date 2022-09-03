@@ -11,9 +11,16 @@
 #include "list.hpp"
 #include "element.hpp"
 #include "config.hpp"
+#include "menuType.hpp"
+#include "timeModeElement.hpp"
 
-namespace Menu{
+namespace Menu
+{
 class ListBase;
+}
+namespace ChessTimeMode
+{
+class Base;
 }
 
 template <int16_t Size>
@@ -31,6 +38,8 @@ public:
 
 	uint8_t sendImpulse(uint16_t id, uint16_t state = 0) override;
 	MenuType getMenuType() override {return MenuType::mainList;}
+	const ChessTimeMode::Base * getCurrentTimeMode();
+
 };
 
 
@@ -66,8 +75,19 @@ uint8_t MainList<Size>::sendImpulse(uint16_t id, uint16_t state)
 	}
 }
 
+template <int16_t Size>
+const ChessTimeMode::Base * MainList<Size>::getCurrentTimeMode()
+{
+	if(Menu::ListBase * list = menuL::getCurElementType()){
+		if(Menu::Element * el = list->getCurElement()){
+			if(el->getMenuType() == MenuType::timeModeElement){
+				return static_cast<TimeModeElement *>(el)->getMode();
+			}
+		}
+	}
 
-
+	return nullptr;
+}
 
 
 

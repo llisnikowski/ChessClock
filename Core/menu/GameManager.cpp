@@ -8,6 +8,9 @@
 #include "config.hpp"
 #include "gameManager.hpp"
 #include "../chessTimeMode/base.hpp"
+#include "../chessTimeMode/modeType.hpp"
+#include "../chessTimeMode/normal.hpp"
+#include "../chessTimeMode/universal.hpp"
 
 GameManager::GameManager()
 	:Menu::Element(""), gameState_(), player_()
@@ -22,7 +25,8 @@ GameManager::~GameManager()
 
 uint8_t GameManager::sendImpulse(uint16_t id, uint16_t state)
 {
-	switch(static_cast<SignalId>(id)){
+	switch(static_cast<SignalId>(id))
+	{
 	case SignalId::playButton:
 		if(gameState_ == stop){
 
@@ -44,4 +48,28 @@ uint8_t GameManager::sendImpulse(uint16_t id, uint16_t state)
 	default:
 		return 0;
 	}
+}
+
+void GameManager::setChessTimeMode(const ChessTimeMode::Base * mode)
+{
+	switch(mode->getMenuType())
+	{
+	case ModeType::normal:
+	{
+		mode_ = *static_cast<const ChessTimeMode::Normal *>(mode);
+		break;
+	}
+	case ModeType::universal:
+	{
+		mode_ = *static_cast<const ChessTimeMode::Universal *>(mode);
+		break;
+	}
+	default:
+		break;
+	}
+}
+
+const ChessTimeMode::Universal & GameManager::getChessTimeMode() const
+{
+	return mode_;
 }
