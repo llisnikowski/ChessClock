@@ -32,31 +32,31 @@ uint8_t GameManager::sendImpulse(uint16_t id, uint16_t state)
 		if(gameState_ == stop){
 			gameState_ = play;
 			if(!player_){
-				oldTick = HAL_GetTick() - oneSecound + player1Ticks_;
+				mode_.getCountdownTimer1().start();
 			}
 			else{
-				oldTick = HAL_GetTick() - oneSecound + player2Ticks_;
+				mode_.getCountdownTimer2().start();
 			}
 		}
 		else if(gameState_ == play){
 			gameState_ = stop;
-			if(!player_){
-				player1Ticks_ = HAL_GetTick() - oldTick;
-			}
-			else{
-				player2Ticks_ = HAL_GetTick() - oldTick;
-			}
+			mode_.getCountdownTimer1().stop();
+			mode_.getCountdownTimer2().stop();
 		}
 		return 1;
 	case SignalId::player1Button:
 		if(gameState_ == play && !player_){
 			player_ = true;
+			mode_.getCountdownTimer1().stop();
+			mode_.getCountdownTimer2().start();
 			return 1;
 		}
 		return 0;
 	case SignalId::player2Button:
 		if(gameState_ == play && player_ ){
 			player_ = false;
+			mode_.getCountdownTimer2().stop();
+			mode_.getCountdownTimer1().start();
 			return 1;
 		}
 		return 0;
@@ -64,6 +64,7 @@ uint8_t GameManager::sendImpulse(uint16_t id, uint16_t state)
 		return 0;
 	}
 }
+
 
 void GameManager::setChessTimeMode(const ChessTimeMode::Base * mode)
 {
@@ -93,16 +94,13 @@ const ChessTimeMode::Universal & GameManager::getChessTimeMode() const
 uint8_t GameManager::update()
 {
 	if(gameState_ == play){
-		uint32_t curTick = HAL_GetTick();
-		if(curTick - oldTick >= oneSecound){
-			while(curTick - oldTick >= oneSecound){
-				if(!player_)
-					mode_.getTime1().addSeconds(-1);
-				else
-					mode_.getTime2().addSeconds(-1);
-				oldTick += 1000;
-			}
-		return Menu::used;
+		if(!player_){
+			if(mode_.getCountdownTimer1().update())
+				return Menu::used;
+		}
+		else{
+			if(mode_.getCountdownTimer2().update())
+				return Menu::used;
 		}
 	}
 	return Menu::noAction;

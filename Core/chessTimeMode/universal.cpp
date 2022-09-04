@@ -28,22 +28,37 @@ void Universal::operator =(const Normal & mode)
 
 const TimeHMS & Universal::getTime1() const
 {
-	return times_[0];
+	return times_[0].getTime();
 }
 
 const TimeHMS & Universal::getTime2() const
 {
-	return times_[1];
+	return times_[1].getTime();
 }
 
 TimeHMS & Universal::getTime1()
 {
-	return times_[0];
+	return times_[0].getTime();
 }
 
 TimeHMS & Universal::getTime2()
 {
+	return times_[1].getTime();
+}
+
+CountdownTimer & Universal::getCountdownTimer1()
+{
+	return times_[0];
+}
+
+CountdownTimer & Universal::getCountdownTimer2()
+{
 	return times_[1];
 }
+
+
+
+
+
 
 } /* namespace ChessTimeMode */

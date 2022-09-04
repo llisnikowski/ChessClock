@@ -17,6 +17,8 @@ namespace ChessTimeMode
 class Base;
 }
 
+class Diode;
+
 class GameManager : public Menu::Element
 {
 public:
@@ -37,9 +39,6 @@ public:
 
 private:
 	ChessTimeMode::Universal mode_;
-	uint16_t player1Ticks_;
-	uint16_t player2Ticks_;
-	uint32_t oldTick;
 
 	uint8_t gameState_;
 	bool player_;

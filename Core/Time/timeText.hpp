@@ -34,6 +34,7 @@ private:
 
 
 
+
 constexpr void TimeText::operator=(const TimeHMS & time)
 {
 	for(int i = 0; i < TIME_TEXT_SIZE; i++) timeText_[i] = 0;

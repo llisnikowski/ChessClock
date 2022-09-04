@@ -11,6 +11,7 @@
 #include "base.hpp"
 #include "normal.hpp"
 #include "../time/timeHMS.hpp"
+#include "../time/CountdownTimer.hpp"
 #include "modeType.hpp"
 
 namespace ChessTimeMode {
@@ -30,8 +31,11 @@ public:
 	TimeHMS & getTime1() override;
 	TimeHMS & getTime2() override;
 
+	CountdownTimer & getCountdownTimer1();
+	CountdownTimer & getCountdownTimer2();
+
 private:
-	TimeHMS times_[2];
+	CountdownTimer times_[2];
 };
 
 } /* namespace ChessTimeMode */
