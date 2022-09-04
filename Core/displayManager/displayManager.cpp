@@ -7,6 +7,8 @@
 
 #include "displayManager.hpp"
 
+#include <string.h>
+
 #include "../ssd1306/oledDisplay.h"
 #include "../menu/element.hpp"
 #include "../menu/listBase.hpp"
@@ -15,6 +17,7 @@
 #include "../menu/gameManager.hpp"
 #include "../time/timeText.hpp"
 #include "../chessTimeMode/universal.hpp"
+
 
 
 DisplayManager::DisplayManager(OledDisplay & display1, OledDisplay & display2)
@@ -39,17 +42,21 @@ void DisplayManager::findAndDisplay(Menu::Element * el)
 	}
 }
 
+
+
 void DisplayManager::display(MainList<mainListSize> * list)
 {
 	display1_.clear();
-	display1_.setCursor(5, 5);
 	if(auto * subList = list->getCurElementType()){
-		display1_.print(subList->getName(), 1);
+		const char * name = subList->getName();
+		display1_.setCursor(findLocationX(3, strlen(name)), 5);
+		display1_.print(name, 3);
 		if(auto * subEl = subList->getCurElement()){
 			if(subEl->getMenuType() == MenuType::timeModeElement){
 				display2_.clear();
-				display2_.setCursor(5, 5);
-				display2_.print(TimeText{static_cast<TimeModeElement*>(subEl)->getMode()->getTime1()}(), 1);
+				TimeText timeText = TimeText{static_cast<TimeModeElement*>(subEl)->getMode()->getTime1()};
+				display2_.setCursor(findLocationX(3, timeText.getLength()), 5);
+				display2_.print(timeText(), 3);
 				display2_.display();
 			}
 		}
@@ -65,11 +72,13 @@ void DisplayManager::display(GameManager * gameManager)
 
 	display1_.clear();
 	display2_.clear();
-	display1_.setCursor(5, 5);
-	display2_.setCursor(5, 5);
+	TimeText timeText1(mode.getTime1());
+	TimeText timeText2(mode.getTime2());
+	display1_.setCursor(findLocationX(3, timeText1.getLength()), 5);
+	display2_.setCursor(findLocationX(3, timeText2.getLength()), 5);
 
-	display1_.print(TimeText(mode.getTime1()).getText());
-	display2_.print(TimeText(mode.getTime2()).getText());
+	display1_.print(timeText1(),3);
+	display2_.print(timeText2(),3);
 
 	display1_.display();
 	display2_.display();
@@ -84,8 +93,10 @@ void DisplayManager::display(OledDisplay & display, TimeModeElement * timeModeEl
 	currentElement_ = timeModeElement;
 }
 
-
-
+int8_t DisplayManager::findLocationX(uint8_t size, uint8_t length)
+{
+	return (128 - (size * 5 + 1) * length)/2;
+}
 
 
 

@@ -38,8 +38,9 @@ public:
 
 	void displayTime(OledDisplay & display, const TimeHMS & time);
 
-
 private:
+	int8_t findLocationX(uint8_t size, uint8_t length);
+
 	OledDisplay & display1_;
 	OledDisplay & display2_;
 
