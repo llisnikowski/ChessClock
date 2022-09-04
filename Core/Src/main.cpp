@@ -141,6 +141,8 @@ int main(void)
   display2.drawPixel(1, 1);
   display2.display();
 
+  gameManager.setDiodes(&dPlayer1, &dPlayer2);
+
   menuManager.begin(&displayManager, menuGenerator.getMainList(), &gameManager);
 
   /* USER CODE END 2 */

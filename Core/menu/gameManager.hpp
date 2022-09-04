@@ -37,11 +37,17 @@ public:
 	uint8_t update() override;
 	uint8_t sendImpulse(uint16_t id, uint16_t state = 0) override;
 
+	void setDiodes(Diode * diode1, Diode * diode2);
+
 private:
+	void turnOnDiodes();
+
 	ChessTimeMode::Universal mode_;
 
 	uint8_t gameState_;
 	bool player_;
+
+	Diode * diodes_[2];
 };
 
 #endif /* MENU_GAMEMANAGER_HPP_ */

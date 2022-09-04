@@ -73,10 +73,10 @@ void Error_Handler(void);
 #define BUTTON_MINUS_GPIO_Port GPIOB
 #define BUTTON_OPTIONS_Pin GPIO_PIN_4
 #define BUTTON_OPTIONS_GPIO_Port GPIOB
-#define DIODE_PLAYER1_Pin GPIO_PIN_8
-#define DIODE_PLAYER1_GPIO_Port GPIOB
-#define DIODE_PLAYER2_Pin GPIO_PIN_9
+#define DIODE_PLAYER2_Pin GPIO_PIN_8
 #define DIODE_PLAYER2_GPIO_Port GPIOB
+#define DIODE_PLAYER1_Pin GPIO_PIN_9
+#define DIODE_PLAYER1_GPIO_Port GPIOB
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */

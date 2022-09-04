@@ -12,9 +12,10 @@
 #include "../chessTimeMode/modeType.hpp"
 #include "../chessTimeMode/normal.hpp"
 #include "../chessTimeMode/universal.hpp"
+#include "../diode/diode.hpp"
 
 GameManager::GameManager()
-	:Menu::Element(""), gameState_(), player_()
+	:Menu::Element(""), gameState_(), player_(), diodes_()
 {
 
 }
@@ -43,12 +44,14 @@ uint8_t GameManager::sendImpulse(uint16_t id, uint16_t state)
 			mode_.getCountdownTimer1().stop();
 			mode_.getCountdownTimer2().stop();
 		}
+		turnOnDiodes();
 		return 1;
 	case SignalId::player1Button:
 		if(gameState_ == play && !player_){
 			player_ = true;
 			mode_.getCountdownTimer1().stop();
 			mode_.getCountdownTimer2().start();
+			turnOnDiodes();
 			return 1;
 		}
 		return 0;
@@ -57,6 +60,7 @@ uint8_t GameManager::sendImpulse(uint16_t id, uint16_t state)
 			player_ = false;
 			mode_.getCountdownTimer2().stop();
 			mode_.getCountdownTimer1().start();
+			turnOnDiodes();
 			return 1;
 		}
 		return 0;
@@ -65,6 +69,11 @@ uint8_t GameManager::sendImpulse(uint16_t id, uint16_t state)
 	}
 }
 
+void GameManager::setDiodes(Diode * diode1, Diode * diode2)
+{
+	diodes_[0] = diode1;
+	diodes_[1] = diode2;
+}
 
 void GameManager::setChessTimeMode(const ChessTimeMode::Base * mode)
 {
@@ -106,6 +115,23 @@ uint8_t GameManager::update()
 	return Menu::noAction;
 }
 
-
+void GameManager::turnOnDiodes()
+{
+	if(!diodes_[0] || !diodes_[1]) return;
+	if(gameState_ == play){
+		if(!player_){
+			diodes_[0]->write(true);
+			diodes_[1]->write(false);
+		}
+		else{
+			diodes_[0]->write(false);
+			diodes_[1]->write(true);
+		}
+	}
+	else{
+		diodes_[0]->write(false);
+		diodes_[1]->write(false);
+	}
+}
 
 
