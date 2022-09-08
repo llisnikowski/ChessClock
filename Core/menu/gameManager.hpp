@@ -11,6 +11,7 @@
 #include <stdint.h>
 #include "../menu/element.hpp"
 #include "../chessTimeMode/universal.hpp"
+#include "../menu/menuType.hpp"
 
 namespace ChessTimeMode
 {
@@ -34,10 +35,13 @@ public:
 	void setChessTimeMode(const ChessTimeMode::Base * mode);
 	const ChessTimeMode::Universal & getChessTimeMode() const;
 
+	MenuType getMenuType() override {return MenuType::gameManager;}
+
 	uint8_t update() override;
 	uint8_t sendImpulse(uint16_t id, uint16_t state = 0) override;
 
 	void setDiodes(Diode * diode1, Diode * diode2);
+	bool getPlayer() const;
 
 private:
 	void turnOnDiodes();

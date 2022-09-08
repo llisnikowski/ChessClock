@@ -37,8 +37,8 @@ void DisplayManager::findAndDisplay(Menu::Element * el)
 	else if(el->getMenuType() == MenuType::mainList){
 		display(static_cast<MainList<mainListSize> *>(el));
 	}
-	else if(el->getMenuType() == MenuType::timeModeElement){
-		//display(static_cast<TimeModeElement *>(el));
+	else if(el->getMenuType() == MenuType::gameManager){
+		display(static_cast<GameManager *>(el));
 	}
 }
 
@@ -79,6 +79,13 @@ void DisplayManager::display(GameManager * gameManager)
 
 	display1_.print(timeText1(),3);
 	display2_.print(timeText2(),3);
+
+	if(!gameManager->getPlayer()){
+		display1_.fillRect(0, 32-5+1, 5, 5);
+	}
+	else{
+		display2_.fillRect(128-5+1, 32-5+1, 5, 5);
+	}
 
 	display1_.display();
 	display2_.display();

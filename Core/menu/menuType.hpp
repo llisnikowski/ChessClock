@@ -12,7 +12,8 @@ enum class MenuType{
 	element,
 	list,
 	timeModeElement,
-	mainList
+	mainList,
+	gameManager
 };
 
 

@@ -47,7 +47,7 @@ uint8_t GameManager::sendImpulse(uint16_t id, uint16_t state)
 		turnOnDiodes();
 		return 1;
 	case SignalId::player1Button:
-		if(gameState_ == play && !player_){
+		if(!player_){
 			player_ = true;
 			mode_.getCountdownTimer1().stop();
 			mode_.getCountdownTimer2().start();
@@ -56,7 +56,7 @@ uint8_t GameManager::sendImpulse(uint16_t id, uint16_t state)
 		}
 		return 0;
 	case SignalId::player2Button:
-		if(gameState_ == play && player_ ){
+		if(player_ ){
 			player_ = false;
 			mode_.getCountdownTimer2().stop();
 			mode_.getCountdownTimer1().start();
@@ -134,4 +134,7 @@ void GameManager::turnOnDiodes()
 	}
 }
 
-
+bool GameManager::getPlayer() const
+{
+	return player_;
+}

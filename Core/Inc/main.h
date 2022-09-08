@@ -57,6 +57,8 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define DIODE_PLAYER2_Pin GPIO_PIN_0
+#define DIODE_PLAYER2_GPIO_Port GPIOA
 #define BUTTON_LEFT_Pin GPIO_PIN_6
 #define BUTTON_LEFT_GPIO_Port GPIOA
 #define BUTTON_RIGHT_Pin GPIO_PIN_7
@@ -73,8 +75,6 @@ void Error_Handler(void);
 #define BUTTON_MINUS_GPIO_Port GPIOB
 #define BUTTON_OPTIONS_Pin GPIO_PIN_4
 #define BUTTON_OPTIONS_GPIO_Port GPIOB
-#define DIODE_PLAYER2_Pin GPIO_PIN_8
-#define DIODE_PLAYER2_GPIO_Port GPIOB
 #define DIODE_PLAYER1_Pin GPIO_PIN_9
 #define DIODE_PLAYER1_GPIO_Port GPIOB
 /* USER CODE BEGIN Private defines */

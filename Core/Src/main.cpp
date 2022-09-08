@@ -131,7 +131,7 @@ int main(void)
   MX_TIM4_Init();
   /* USER CODE BEGIN 2 */
 
-  HAL_Delay(1000);
+  HAL_Delay(100);
   menuGenerator.link();
 
   display1.init(0x78);
@@ -151,9 +151,6 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   for(int i = 0; i<10; i++){
 	  dPlayer1.toggle();
-	  HAL_Delay(50);
-  }
-  for(int i = 0; i<10; i++){
 	  dPlayer2.toggle();
 	  HAL_Delay(50);
   }
@@ -185,6 +182,7 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+	  HAL_Delay(10);
   }
   /* USER CODE END 3 */
 }
