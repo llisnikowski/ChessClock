@@ -11,7 +11,7 @@
 #include "base.hpp"
 #include "normal.hpp"
 #include "../time/timeHMS.hpp"
-#include "../time/CountdownTimer.hpp"
+#include "../time/countdownTimer.hpp"
 #include "modeType.hpp"
 
 namespace ChessTimeMode {
@@ -33,6 +33,8 @@ public:
 
 	CountdownTimer & getCountdownTimer1();
 	CountdownTimer & getCountdownTimer2();
+	const CountdownTimer & getCountdownTimer1() const;
+	const CountdownTimer & getCountdownTimer2() const;
 
 private:
 	CountdownTimer times_[2];

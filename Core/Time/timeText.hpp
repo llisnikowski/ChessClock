@@ -10,6 +10,7 @@
 
 #include <stdint.h>
 #include "timeHMS.hpp"
+#include "countdownTimer.hpp"
 
 class TimeText {
 	static constexpr uint8_t TIME_TEXT_SIZE = 6;
@@ -20,9 +21,11 @@ public:
 	{
 		operator=(time);
 	}
+	explicit TimeText(const CountdownTimer & countdownTimer);
 	~TimeText();
 
 	constexpr void operator=(const TimeHMS & time);
+	void operator=(const CountdownTimer & countdownTimer);
 	constexpr const char * operator()(){return timeText_;}
 
 	constexpr const char * getText() const {return timeText_;}
@@ -31,7 +34,6 @@ public:
 private:
 	char timeText_[TIME_TEXT_SIZE];
 };
-
 
 
 
@@ -64,6 +66,8 @@ constexpr void TimeText::operator=(const TimeHMS & time)
 		*timeTextPointer++ = timeElement%10 + '0';
 	}
 }
+
+
 
 constexpr const uint8_t TimeText::getLength() const
 {

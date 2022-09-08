@@ -38,6 +38,7 @@ TimeHMS & CountdownTimer::getTime()
 
 int16_t CountdownTimer::getMilliseconds() const
 {
+	if(!play_) return millisecond_;
 	return oneSecound - (HAL_GetTick() - oldTick_);
 }
 
@@ -64,9 +65,12 @@ uint8_t CountdownTimer::update()
 		return noAction;
 	}
 	uint32_t tick = HAL_GetTick();
-	bool secPas = true;
+	uint8_t secPas = noAction;
 	if(tick - oldTick_ <= oneSecound){
-		secPas = false;
+		secPas = secondPassed;
+	}
+	else if(time_ < TimeHMS{0, 0, 10} && tick - oldTick_ > 30){
+		secPas = littleTime;
 	}
 	while(tick - oldTick_ > oneSecound){
 		if(time_ == TimeHMS(0,0,0)){
@@ -82,6 +86,5 @@ uint8_t CountdownTimer::update()
 	if(time_ == TimeHMS(0,0,0) && millisecond_ <= 0){
 		return timeIsUp;
 	}
-	if(secPas) return secondPassed;
-	return noAction;
+	return secPas;
 }

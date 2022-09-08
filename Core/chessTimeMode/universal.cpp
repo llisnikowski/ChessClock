@@ -56,6 +56,16 @@ CountdownTimer & Universal::getCountdownTimer2()
 	return times_[1];
 }
 
+const CountdownTimer & Universal::getCountdownTimer1() const
+{
+	return times_[0];
+}
+
+const CountdownTimer & Universal::getCountdownTimer2() const
+{
+	return times_[1];
+}
+
 
 
 

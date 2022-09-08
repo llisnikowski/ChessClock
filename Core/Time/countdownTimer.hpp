@@ -16,6 +16,7 @@ public:
 	static constexpr uint16_t oneSecound = 1000;
 	enum{
 		noAction,
+		littleTime,
 		secondPassed,
 		timeIsUp
 	};

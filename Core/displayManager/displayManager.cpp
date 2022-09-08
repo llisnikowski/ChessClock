@@ -72,8 +72,8 @@ void DisplayManager::display(GameManager * gameManager)
 
 	display1_.clear();
 	display2_.clear();
-	TimeText timeText1(mode.getTime1());
-	TimeText timeText2(mode.getTime2());
+	TimeText timeText1(mode.getCountdownTimer1());
+	TimeText timeText2(mode.getCountdownTimer2());
 	display1_.setCursor(findLocationX(3, timeText1.getLength()), 5);
 	display2_.setCursor(findLocationX(3, timeText2.getLength()), 5);
 
