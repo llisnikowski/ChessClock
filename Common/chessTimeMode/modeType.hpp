@@ -14,7 +14,8 @@ enum class ModeType : uint8_t
 {
 	base,
 	normal,
-	universal
+	extraTime,
+	universal,
 };
 
 
