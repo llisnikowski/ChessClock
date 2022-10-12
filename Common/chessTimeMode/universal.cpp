@@ -33,6 +33,8 @@ void Universal::operator =(const ExtraTime & mode)
 	extraTimes_[0] = mode.getExtraTime1();
 	extraTimes_[1] = mode.getExtraTime2();
 	copiedMode_ = ModeType::extraTime;
+	addExtraTime(0);
+	addExtraTime(1);
 }
 
 
