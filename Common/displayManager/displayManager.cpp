@@ -54,9 +54,12 @@ void DisplayManager::display(MainList<mainListSize> * list)
 		if(auto * subEl = subList->getCurElement()){
 			if(subEl->getMenuType() == MenuType::timeModeElement){
 				display2_.clear();
-				TimeText timeText = TimeText{static_cast<TimeModeElement*>(subEl)->getMode()->getTime1()};
-				display2_.setCursor(findLocationX(3, timeText.getLength()), 5);
-				display2_.print(timeText(), 3);
+				const char * modeName = static_cast<TimeModeElement*>(subEl)->getName();
+				display2_.setCursor(findLocationX(3, strlen(modeName)), 5);
+				display2_.print(modeName, 3);
+				// TimeText timeText = TimeText{static_cast<TimeModeElement*>(subEl)->getMode()->getTime1()};
+				// display2_.setCursor(findLocationX(3, timeText.getLength()), 5);
+				// display2_.print(timeText(), 3);
 				display2_.display();
 			}
 		}
