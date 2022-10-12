@@ -10,8 +10,9 @@
 
 #include "base.hpp"
 #include "normal.hpp"
-#include "../time/timeHMS.hpp"
-#include "../time/countdownTimer.hpp"
+#include "extraTime.hpp"
+#include "time/timeHMS.hpp"
+#include "time/countdownTimer.hpp"
 #include "modeType.hpp"
 
 namespace ChessTimeMode {
@@ -23,6 +24,7 @@ public:
 	virtual ~Universal();
 
 	void operator =(const Normal & mode);
+	void operator =(const ExtraTime & mode);
 
 	const ModeType getMenuType() const override {return ModeType::universal;}
 
@@ -36,8 +38,17 @@ public:
 	const CountdownTimer & getCountdownTimer1() const;
 	const CountdownTimer & getCountdownTimer2() const;
 
+	ModeType getCopiedMode() const {return copiedMode_;}
+	const TimeHMS & getExtraTime1() const;
+	const TimeHMS & getExtraTime2() const;
+
+	void addExtraTime(uint8_t i);
+
 private:
 	CountdownTimer times_[2];
+	TimeHMS extraTimes_[2];
+
+	ModeType copiedMode_;
 };
 
 } /* namespace ChessTimeMode */

@@ -55,8 +55,8 @@ private:
 
 
 
-constexpr TimeHMS operator+(TimeHMS & t1, TimeHMS & t2);
-constexpr TimeHMS operator-(TimeHMS & t1, TimeHMS & t2);
+constexpr TimeHMS operator+(const TimeHMS & t1, const TimeHMS & t2);
+constexpr TimeHMS operator-(const TimeHMS & t1, const TimeHMS & t2);
 
 
 
@@ -194,14 +194,14 @@ constexpr bool TimeHMS::operator!=(const TimeHMS & t) const
 
 //------------------------
 
-constexpr TimeHMS operator+(TimeHMS & t1, TimeHMS & t2)
+constexpr TimeHMS operator+(const TimeHMS & t1, const TimeHMS & t2)
 {
 	TimeHMS t = t1;
 	t += t2;
 	return t;
 }
 
-constexpr TimeHMS operator-(TimeHMS & t1, TimeHMS & t2)
+constexpr TimeHMS operator-(const TimeHMS & t1, const TimeHMS & t2)
 {
 	TimeHMS t = t1;
 	t -= t2;

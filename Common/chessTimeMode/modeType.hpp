@@ -12,6 +12,7 @@
 
 enum class ModeType : uint8_t
 {
+	none,
 	base,
 	normal,
 	extraTime,

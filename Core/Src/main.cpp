@@ -29,14 +29,14 @@
 
 #include "config.hpp"
 
-#include "../uartLog/uartLog.h"
-#include "../button/button.hpp"
-#include "../diode/diode.hpp"
-#include "../ssd1306/oledDisplay.h"
-#include "../displayManager/displayManager.hpp"
-#include "../menuGenerator/menuGenerator.hpp"
-#include "../menuManager/menuManager.hpp"
-#include "../menu/gameManager.hpp"
+#include "uartLog/uartLog.h"
+#include "button/button.hpp"
+#include "diode/diode.hpp"
+#include "ssd1306/oledDisplay.h"
+#include "displayManager/displayManager.hpp"
+#include "menuGenerator/menuGenerator.hpp"
+#include "menuManager/menuManager.hpp"
+#include "menu/gameManager.hpp"
 
 /* USER CODE END Includes */
 

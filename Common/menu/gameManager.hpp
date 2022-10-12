@@ -45,6 +45,7 @@ public:
 
 private:
 	void turnOnDiodes();
+	void switchPlayer();
 
 	ChessTimeMode::Universal mode_;
 

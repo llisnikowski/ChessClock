@@ -36,6 +36,16 @@ TimeHMS & CountdownTimer::getTime()
 	return time_;
 }
 
+TimeHMS & CountdownTimer::setTime(TimeHMS & time)
+{
+	time_ = time;
+}
+
+TimeHMS & CountdownTimer::setTime(TimeHMS && time)
+{
+	time_ = time;
+}
+
 int16_t CountdownTimer::getMilliseconds() const
 {
 	if(!play_) return millisecond_;

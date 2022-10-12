@@ -11,6 +11,7 @@
 #include "../chessTimeMode/base.hpp"
 #include "../chessTimeMode/modeType.hpp"
 #include "../chessTimeMode/normal.hpp"
+#include "../chessTimeMode/extraTime.hpp"
 #include "../chessTimeMode/universal.hpp"
 #include "../diode/diode.hpp"
 
@@ -48,19 +49,13 @@ uint8_t GameManager::sendImpulse(uint16_t id, uint16_t state)
 		return 1;
 	case SignalId::player1Button:
 		if(!player_){
-			player_ = true;
-			mode_.getCountdownTimer1().stop();
-			mode_.getCountdownTimer2().start();
-			turnOnDiodes();
+			switchPlayer();
 			return 1;
 		}
 		return 0;
 	case SignalId::player2Button:
 		if(player_ ){
-			player_ = false;
-			mode_.getCountdownTimer2().stop();
-			mode_.getCountdownTimer1().start();
-			turnOnDiodes();
+			switchPlayer();
 			return 1;
 		}
 		return 0;
@@ -82,6 +77,11 @@ void GameManager::setChessTimeMode(const ChessTimeMode::Base * mode)
 	case ModeType::normal:
 	{
 		mode_ = *static_cast<const ChessTimeMode::Normal *>(mode);
+		break;
+	}
+	case ModeType::extraTime:
+	{
+		mode_ = *static_cast<const ChessTimeMode::ExtraTime *>(mode);
 		break;
 	}
 	case ModeType::universal:
@@ -138,3 +138,29 @@ bool GameManager::getPlayer() const
 {
 	return player_;
 }
+
+
+void GameManager::switchPlayer()
+{
+	
+	if(!player_){
+		player_ = true;
+		mode_.getCountdownTimer1().stop();
+		mode_.getCountdownTimer2().start();
+		turnOnDiodes();
+		if(gameState_ == play && mode_.getCopiedMode() == ModeType::extraTime){
+			mode_.addExtraTime(0);
+		}
+	}
+	else{
+		player_ = false;
+		mode_.getCountdownTimer2().stop();
+		mode_.getCountdownTimer1().start();
+		turnOnDiodes();
+		if(gameState_ == play && mode_.getCopiedMode() == ModeType::extraTime){
+			mode_.addExtraTime(1);
+		}
+	}
+}
+
+

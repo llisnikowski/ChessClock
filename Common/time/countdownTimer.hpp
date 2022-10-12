@@ -29,6 +29,8 @@ public:
 
 	const TimeHMS & getTime() const;
 	TimeHMS & getTime();
+	TimeHMS & setTime(TimeHMS & time);
+	TimeHMS & setTime(TimeHMS && time);
 	int16_t getMilliseconds() const;
 
 	void start();

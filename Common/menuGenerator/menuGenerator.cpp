@@ -12,11 +12,12 @@
 #include "../menu/timeModeElement.hpp"
 #include "../chessTimeMode/base.hpp"
 #include "../chessTimeMode/normal.hpp"
+#include "../chessTimeMode/extraTime.hpp"
 #include "../time/timeHMS.hpp"
 
-constexpr uint8_t BLITZ_COUNT{2};
-constexpr uint8_t RAPID_COUNT{4};
-constexpr uint8_t NORMAL_COUNT{2};
+constexpr uint8_t BLITZ_COUNT{3};
+constexpr uint8_t RAPID_COUNT{5};
+constexpr uint8_t NORMAL_COUNT{3};
 
 MainList<mainListSize> mainList;
 Menu::List<BLITZ_COUNT + RAPID_COUNT + NORMAL_COUNT, TimeModeElement> allModesList{"All"};
@@ -25,20 +26,23 @@ Menu::List<RAPID_COUNT,TimeModeElement> rapidList{"Rapid"};
 Menu::List<NORMAL_COUNT,TimeModeElement> normalList{"Normal"};
 
 ChessTimeMode::Normal cTM_1m{TimeHMS{0, 1, 0}};
+ChessTimeMode::ExtraTime cTM_3m_2s{TimeHMS{0, 3, 0},TimeHMS{0, 0, 2}};
 ChessTimeMode::Normal cTM_5m{TimeHMS{0, 5, 0}};
 
 ChessTimeMode::Normal cTM_10m{TimeHMS{0, 10, 0}};
+ChessTimeMode::ExtraTime cTM_10m_5s{TimeHMS{0, 10, 0},TimeHMS{0, 0, 5}};
 ChessTimeMode::Normal cTM_15m{TimeHMS{0, 15, 0}};
 ChessTimeMode::Normal cTM_20m{TimeHMS{0, 20, 0}};
 ChessTimeMode::Normal cTM_30m{TimeHMS{0, 30, 0}};
 
 ChessTimeMode::Normal cTM_1h{TimeHMS{1, 0, 0}};
+ChessTimeMode::ExtraTime cTM_1h_30s{TimeHMS{1, 0, 0},TimeHMS{0, 0, 30}};
 ChessTimeMode::Normal cTM_1h30m{TimeHMS{1, 30, 0}};
 
 
-TimeModeElement blitzElements[BLITZ_COUNT]{{"1min", cTM_1m}, {"5min", cTM_5m}};
-TimeModeElement rapidElements[RAPID_COUNT]{{"10min", cTM_10m}, {"15min", cTM_15m}, {"20min", cTM_20m}, {"30min", cTM_30m}};
-TimeModeElement normalElements[NORMAL_COUNT]{{"1h", cTM_1h}, {"1h 30min", cTM_1h30m}};
+TimeModeElement blitzElements[BLITZ_COUNT]{{"1min", cTM_1m}, {"3min+2s", cTM_3m_2s}, {"5min", cTM_5m}};
+TimeModeElement rapidElements[RAPID_COUNT]{{"10min", cTM_10m}, {"10min+5s", cTM_10m_5s}, {"15min", cTM_15m}, {"20min", cTM_20m}, {"30min", cTM_30m}};
+TimeModeElement normalElements[NORMAL_COUNT]{{"1h", cTM_1h}, {"1h+30s", cTM_1h_30s}, {"1h 30min", cTM_1h30m}};
 
 
 
